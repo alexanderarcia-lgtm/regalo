@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños</title>
+
+<style>
+
+/* ===== GENERAL ===== */
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial;
+    background:pink;
+    text-align:center;
+}
+
+/* ===== PANTALLA INICIO ===== */
+#inicio{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:pink;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+h1{
+    font-size:45px;
+    color:white;
+    text-shadow:2px 2px 8px #ff4da6;
+}
+
+/* IMAGENES */
+.gatos img{
+    width:120px;
+    margin:10px;
+    border-radius:15px;
+}
+
+/* CORAZONES */
+.corazon{
+    position:fixed;
+    top:-20px;
+    color:red;
+    animation:caer 5s linear infinite;
+}
+
+@keyframes caer{
+    to{
+        transform:translateY(110vh);
+    }
+}
+
+/* ===== SOBRE ===== */
+#sobreArea{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+}
+
+#sobre{
+    width:320px;
+    height:200px;
+    background:#f5d0a9;
+    position:relative;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* tapa */
+#tapa{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#e6b98c;
+    clip-path:polygon(0 0,100% 0,50% 60%);
+    transform-origin:top;
+    transition:1s;
+    z-index:4;
+}
+
+/* sello naruto */
+#sello{
+    position:absolute;
+    width:60px;
+    height:60px;
+    right:15px;
+    top:15px;
+    z-index:5;
+}
+
+#sello img{
+    width:100%;
+}
+
+/* carta */
+#carta{
+    position:absolute;
+    width:90%;
+    height:0;
+    left:5%;
+    top:40px;
+    background:white;
+    overflow:auto;
+    border-radius:8px;
+    transition:1s;
+    padding:0 15px;
+}
+
+/* texto */
+#texto{
+    opacity:0;
+    transition:2s;
+}
+
+/* video */
+#videoFinal{
+    display:none;
+    margin-top:15px;
+}
+
+button{
+    padding:10px;
+    border:none;
+    background:#ff4da6;
+    color:white;
+    border-radius:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== INICIO ===== -->
+<div id="inicio">
+
+<h1>🎉 Feliz Cumpleaños 🎉</h1>
+
+<div class="gatos">
+<img src="gatos1.png">
+<img src="gatos2.png">
+<img src="gatos3.png">
+<img src="gatos4.png">
+</div>
+
+</div>
+
+<!-- ===== SOBRE ===== -->
+<div id="sobreArea">
+
+<div id="sobre">
+
+<div id="tapa"></div>
+
+<div id="sello">
+<img src="sello.png">
+</div>
+
+<div id="carta">
+
+<div id="texto">
+
+<p>
+Feliz cumpleaños lubraska,<br><br>
+
+escribo esta carta para decirte y expresarte muchas cosas,
+me alegra que estés bien, que sigas viviendo y haciendo cosas que te gustan.
+No he hablado contigo durante mucho tiempo así que no sé realmente mucho de ti,
+pero de igual manera sigue soñando con lo que quieres hacer y sigue esforzándote
+en seguir adelante.<br><br>
+
+Come, toma agua y cuídate mucho y espero que sigas sonriendo
+y levantándote aun así te caigas, lo importante es que no te rindas.<br><br>
+
+Att: Mani 💌
+</p>
+
+<button onclick="verVideo()">Ver sorpresa 🎬</button>
+
+<div id="videoFinal">
+<video width="100%" controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== AUDIOS ===== -->
+<audio id="musicaInicio">
+<source src="musica_inicio.mp3">
+</audio>
+
+<audio id="musicaCarta">
+<source src="musica_carta.mp3">
+</audio>
+
+<script>
+
+/* ===== CORAZONES ===== */
+setInterval(()=>{
+    let c=document.createElement("div");
+    c.className="corazon";
+    c.innerHTML="💗";
+    c.style.left=Math.random()*100+"vw";
+    c.style.fontSize=(20+Math.random()*20)+"px";
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(),5000);
+},300);
+
+/* ===== INICIO ===== */
+let musicaInicio=document.getElementById("musicaInicio");
+musicaInicio.play();
+
+/* después de 30 segundos */
+setTimeout(()=>{
+    musicaInicio.pause();
+    document.getElementById("inicio").style.display="none";
+    document.getElementById("sobreArea").style.display="flex";
+},30000);
+
+
+/* ===== ABRIR SOBRE ===== */
+let abierto=false;
+
+document.getElementById("sobre").onclick=function(){
+
+if(abierto) return;
+abierto=true;
+
+document.getElementById("tapa").style.transform="rotateX(180deg)";
+document.getElementById("sello").style.top="-80px";
+
+let carta=document.getElementById("carta");
+carta.style.height="260px";
+carta.style.top="-60px";
+carta.style.padding="15px";
+
+setTimeout(()=>{
+document.getElementById("texto").style.opacity=1;
+},900);
+
+/* cambiar musica */
+document.getElementById("musicaCarta").play();
+}
+
+/* ===== VIDEO FINAL ===== */
+function verVideo(){
+
+let musicaCarta=document.getElementById("musicaCarta");
+musicaCarta.pause();
+musicaCarta.currentTime=0;
+
+document.getElementById("videoFinal").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
